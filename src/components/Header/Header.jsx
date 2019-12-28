@@ -53,7 +53,7 @@ export default function Header() {
                 style={{ textDecoration: 'none' }}
                 onClick={toggleNav}
             >
-                React Wrapper
+                Basic React Wrapper Example
             </Link>
         </nav>
       </CSSTransition>
