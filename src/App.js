@@ -12,7 +12,7 @@ function App() {
       <Header />
         <Switch>
           <Route exact path="/" component={WrapperPage} />
-          <Route exact path="/static-bar" component={StaticBarChartPage} />
+          <Route exact path="/updating-bar" component={StaticBarChartPage} />
         </Switch>
     </Router>
   );

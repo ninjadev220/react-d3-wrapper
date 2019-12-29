@@ -56,11 +56,11 @@ export default function Header() {
                 Basic React Wrapper Example
             </Link>
             <Link 
-                to={"/static-bar"}
+                to={"/updating-bar"}
                 style={{ textDecoration: 'none' }}
                 onClick={toggleNav}
             >
-                Static Bar Chart Wrapper
+                Updating Bar Chart Wrapper
             </Link>
         </nav>
       </CSSTransition>
