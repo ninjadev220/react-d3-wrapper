@@ -9,5 +9,13 @@
 }
 
 .select-wrapper {
+  width: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.select-container {
   width: 200px;
 }

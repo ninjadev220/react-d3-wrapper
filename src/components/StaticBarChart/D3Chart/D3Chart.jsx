@@ -96,5 +96,7 @@ export default class D3Chart {
                 .attr('height', d => height - y(d.height))
                 .attr('y', d => y(d.height))
 
+            console.log(rects);
+
     }
 }
