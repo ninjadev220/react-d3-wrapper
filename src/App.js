@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import './App.css';
 
 import WrapperPage from './pages/WrapperPage';
+import StaticBarChartPage from './pages/StaticBarChartPage';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Header />
         <Switch>
           <Route exact path="/" component={WrapperPage} />
+          <Route exact path="/static-bar" component={StaticBarChartPage} />
         </Switch>
     </Router>
   );

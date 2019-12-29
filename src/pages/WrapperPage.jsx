@@ -1,5 +1,5 @@
 import React from 'react';
-import ChartWrapper from '../components/ChartWrapper/ChartWrapper';
+import ChartWrapper from '../components/WrapperExample/ChartWrapper/ChartWrapper';
 
 function WrapperPage() {
   return (
