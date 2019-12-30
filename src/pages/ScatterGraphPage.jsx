@@ -11,11 +11,13 @@ function ScatterGraphPage() {
             .catch(error => console.log(error))
     }, []);
 
+    console.log('App level', scatterData);
+
     const renderChart = () => {
         if(scatterData.length >= 0) {
             return 'No Data Yet'
         }
-        return  <ChartWrapper data={scatterData} />
+        return <ChartWrapper data={scatterData} />
     };
 
     return (
