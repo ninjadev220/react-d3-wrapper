@@ -23,7 +23,7 @@ function StaticBarChartPage() {
                 </div>
             </div>
             <ChartWrapper gender={gender} />
-    </div>
+        </div>
   );
 }
 

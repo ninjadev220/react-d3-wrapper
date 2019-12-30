@@ -5,6 +5,7 @@ import './App.css';
 
 import WrapperPage from './pages/WrapperPage';
 import StaticBarChartPage from './pages/StaticBarChartPage';
+import ScatterGraphPage from './pages/ScatterGraphPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={WrapperPage} />
           <Route exact path="/updating-bar" component={StaticBarChartPage} />
+          <Route exact path="/scatter-graph" component={ScatterGraphPage} />
         </Switch>
     </Router>
   );
