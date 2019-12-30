@@ -4,7 +4,7 @@ import D3Chart from './D3Chart/D3Chart';
 class ChartWrapper extends Component {
     componentDidMount(){
         this.setState({
-            chart: new D3Chart(this.refs.chart)
+            chart: new D3Chart(this.refs.chart, this.props.data)
         })
     }
 

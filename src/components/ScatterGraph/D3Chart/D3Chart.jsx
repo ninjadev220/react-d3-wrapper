@@ -5,8 +5,10 @@ const width = 500 - margin.left - margin.right;
 const height = 300 - margin.top - margin.bottom;
 
 class D3Chart {
-	constructor(element) {
-		let vis = this
+	constructor(element, data) {
+        let vis = this
+        
+        console.log(data);
 
 		vis.g = d3.select(element)
 			.append("svg")
