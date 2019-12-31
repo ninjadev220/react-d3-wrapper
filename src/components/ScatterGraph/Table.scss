@@ -1,0 +1,53 @@
+.table-form {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+
+    &__row {
+        height: 50px;
+        width: 110%;
+
+        &__input {
+            margin: 10px;
+            padding: 5px;
+        }
+
+        &__button {
+            background-color: rgb(3, 97, 173);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            font-weight: bold;
+            width: 5rem;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                background-color: rgb(0, 123, 223);
+            }
+        }
+    }
+
+    &__table-data {
+        width: 9rem;
+        padding: 10px;
+        border-bottom: 1px solid black;
+
+        &__button {
+            background-color: rgb(172, 6, 6);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            font-weight: bold;
+            width: 5rem;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+
+            &:hover {
+                background-color: rgb(223, 0, 0);
+            }
+        }
+    }
+}

@@ -1,13 +1,12 @@
 import * as d3 from 'd3'
 
 const margin = { top: 10, bottom: 80, left: 70, right: 10 }
-const width = 500 - margin.left - margin.right;
-const height = 300 - margin.top - margin.bottom;
+const width = 600 - margin.left - margin.right;
+const height = 400 - margin.top - margin.bottom;
 
 class D3Chart {
 	constructor(element, data) {
         let vis = this
-        vis.data = data
         console.log('D3 level', vis.data)
 
 		vis.g = d3.select(element)
@@ -63,7 +62,8 @@ class D3Chart {
             .data(vis.data, d => d.name)
 
         // EXIT
-        circles.exit().remove()
+        circles.exit()
+            .remove()
 
         // UPDATE
         circles
@@ -72,10 +72,12 @@ class D3Chart {
 
         // ENTER
         circles.enter().append('circle')
-            .attr('cx', d => vis.x(d.age))
-            .attr('cy', vis.y(0))
-            .attr('r', 5)
+            .attr("cy", vis.y(0))
+            .attr("cx", d => vis.x(d.age))
+            .attr("r", 5)
             .attr('fill', '#259CD0')
+            .transition(1000)
+				.attr("cy", d => vis.y(d.height))
 	}
 }
 

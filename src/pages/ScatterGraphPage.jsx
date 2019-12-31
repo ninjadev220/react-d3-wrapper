@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ChartWrapper from '../components/ScatterGraph/ChartWrapper';
+import Table from '../components/ScatterGraph/Table';
 import { json } from 'd3';
 
 function ScatterGraphPage() {
-    const [scatterData, dataLoader] = useState([]);
+    const [scatterData, dataLoader] = useState({ data: [] });
 
     useEffect(() => {
         json('https://udemy-react-d3.firebaseio.com/children.json')
@@ -14,10 +15,15 @@ function ScatterGraphPage() {
     console.log('App level', scatterData);
 
     const renderChart = () => {
-        if(scatterData.length >= 0) {
+        if(scatterData.length === 0) {
             return 'No Data Yet'
         }
-        return <ChartWrapper data={scatterData} />
+        return (
+            <div className='graph-container'>
+                <ChartWrapper data={scatterData.data} />
+                <Table data={scatterData.data} />
+            </div>
+        )
     };
 
     return (
