@@ -14,6 +14,10 @@ function ScatterGraphPage() {
 
     console.log('App level', scatterData);
 
+    const updateData = (data) => {
+        dataLoader({ data })
+    }
+
     const renderChart = () => {
         if(scatterData.length === 0) {
             return 'No Data Yet'
@@ -21,7 +25,7 @@ function ScatterGraphPage() {
         return (
             <div className='graph-container'>
                 <ChartWrapper data={scatterData.data} />
-                <Table data={scatterData.data} />
+                <Table data={scatterData.data} updateData={updateData} />
             </div>
         )
     };
