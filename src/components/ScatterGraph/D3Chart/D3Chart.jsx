@@ -5,9 +5,9 @@ const width = 600 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
 
 class D3Chart {
-	constructor(element, data) {
+	constructor(element, data, updateName) {
         let vis = this
-        console.log('D3 level', vis.data)
+        vis.updateName = updateName
 
 		vis.g = d3.select(element)
 			.append("svg")
@@ -54,8 +54,8 @@ class D3Chart {
         const xAxisCall = d3.axisBottom(vis.x)
         const yAxisCall = d3.axisLeft(vis.y)
 
-        vis.xAxisGroup.call(xAxisCall)
-        vis.yAxisGroup.call(yAxisCall)
+        vis.xAxisGroup.transition(1000).call(xAxisCall)
+        vis.yAxisGroup.transition(1000).call(yAxisCall)
 
         // JOIN
         const circles = vis.g.selectAll('circle')
@@ -63,10 +63,12 @@ class D3Chart {
 
         // EXIT
         circles.exit()
-            .remove()
+            .transition(1000)
+                .attr('cy', vis.y(0))
+                .remove()
 
         // UPDATE
-        circles
+        circles.transition(1000)
             .attr('cx', d => vis.x(d.age))
             .attr('cy', d => vis.y(d.height))
 
@@ -76,6 +78,7 @@ class D3Chart {
             .attr("cx", d => vis.x(d.age))
             .attr("r", 5)
             .attr('fill', '#259CD0')
+            .on('click', d => vis.updateName(d.name))
             .transition(1000)
 				.attr("cy", d => vis.y(d.height))
 	}

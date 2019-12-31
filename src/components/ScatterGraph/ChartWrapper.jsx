@@ -6,7 +6,6 @@ class ChartWrapper extends Component {
         this.setState({
             chart: new D3Chart(this.refs.chart, this.props.data, this.props.updateName)
         })
-        console.log('Chart Wrapper level', this.props.data)
     }
 
     shouldComponentUpdate() {

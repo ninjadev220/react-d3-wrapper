@@ -3,13 +3,29 @@
     justify-content: center;
     margin: 10px;
 
+    &__table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 10px;
+    }
+
     &__row {
         height: 50px;
         width: 110%;
 
+        &__grey {
+            background-color: rgb(161, 159, 159);
+            color: #fff;
+        }
+
+        &__white {
+            background-color: #fff;
+        }
+
         &__input {
             margin: 10px;
             padding: 5px;
+            background-color: none;
         }
 
         &__button {
@@ -30,9 +46,8 @@
     }
 
     &__table-data {
-        width: 9rem;
+        width: 8rem;
         padding: 10px;
-        border-bottom: 1px solid black;
 
         &__button {
             background-color: rgb(172, 6, 6);

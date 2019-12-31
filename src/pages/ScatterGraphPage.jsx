@@ -5,6 +5,7 @@ import { json } from 'd3';
 
 function ScatterGraphPage() {
     const [scatterData, dataLoader] = useState({ data: [] });
+    const [activeName, activeNameSelector] = useState('');
 
     useEffect(() => {
         json('https://udemy-react-d3.firebaseio.com/children.json')
@@ -12,7 +13,9 @@ function ScatterGraphPage() {
             .catch(error => console.log(error))
     }, []);
 
-    console.log('App level', scatterData);
+    const updateName = (activeName) => { 
+        activeNameSelector({ activeName })
+    }
 
     const updateData = (data) => {
         dataLoader({ data })
@@ -24,8 +27,8 @@ function ScatterGraphPage() {
         }
         return (
             <div className='graph-container'>
-                <ChartWrapper data={scatterData.data} />
-                <Table data={scatterData.data} updateData={updateData} />
+                <ChartWrapper data={scatterData.data} updateName={updateName} />
+                <Table data={scatterData.data} updateData={updateData} activeName={activeName.activeName} />
             </div>
         )
     };
