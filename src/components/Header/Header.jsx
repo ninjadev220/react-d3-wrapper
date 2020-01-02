@@ -69,6 +69,13 @@ export default function Header() {
             >
                 Scatter Graph Wrapper
             </Link>
+            <Link 
+                to={"/column-range"}
+                style={{ textDecoration: 'none' }}
+                onClick={toggleNav}
+            >
+                Column Range Chart Wrapper
+            </Link>
         </nav>
       </CSSTransition>
       <button onClick={toggleNav} className="header-button">
