@@ -13,7 +13,7 @@ class ChartWrapper extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        this.state.chart.update(nextProps)
+        this.state.chart.update(nextProps.year)
     }
 
     render() {
