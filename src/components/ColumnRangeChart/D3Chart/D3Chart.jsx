@@ -1,8 +1,8 @@
 import * as d3 from 'd3';
 
 const margin = { top: 10, bottom: 80, left: 70, right: 10 };
-const width = 900 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+let width = 900 - margin.left - margin.right;
+let height = 700 - margin.top - margin.bottom;
 
 export default class D3Chart {
 	constructor(element) {
@@ -23,7 +23,7 @@ export default class D3Chart {
             .attr('x', -(height / 2))
             .attr('y', -50)
             .attr('text-anchor', 'middle')
-            .text('Sales (Units)')
+            .text('Months')
             .attr('transform', 'rotate(-90)')
 
         vis.xAxisGroup = vis.svg.append('g')
@@ -45,19 +45,26 @@ export default class D3Chart {
 
 	update(year) {
 		const vis = this;
-		vis.data = (year === 'first') ? vis.firstYearData : (year === 'second' ? vis.secondYearData : (year === 'third'? vis.thirdYearData : null));
-        vis.xLabel.text(`The ${year} year of business`)
-        const y = d3.scaleLinear()
+        vis.data = (year === 'first') ? vis.firstYearData : (year === 'second' ? vis.secondYearData : (year === 'third'? vis.thirdYearData : null));
+        vis.xLabel.text('Sales (Units)')
+        const x = d3.scaleLinear()
             .domain([
                 d3.min(vis.data, d => d.sales[0]) * 0.95, 
                 d3.max(vis.data, d => d.sales[1])
             ])
-            .range([height, 0])
-            console.log('UPDATE', vis.data);
-
-        const x = d3.scaleBand()
-            .domain(vis.data.map(d => d.month))
             .range([0, width])
+            console.log('UPDATE', vis.data);
+        
+        // Define the div for the tooltip
+        const tooltip = d3
+            .select('body')
+            .append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
+        const y = d3.scaleBand()
+            .domain(vis.data.map(d => d.month))
+            .range([height, 0])
             .padding(0.4)
 
         const xAxisCall = d3.axisBottom(x)
@@ -69,52 +76,58 @@ export default class D3Chart {
         vis.yAxisGroup
             .transition().duration(500)
             .call(yAxisCall)
+    
+        vis.svg.selectAll(".y-axis")
+            .attr("transform", `translate(${margin.left},0)`)
+            .call(d3.axisLeft(x)
+                .ticks(vis.data.length)
+                .tickFormat(function(d, i) {
+                    return vis.data[i].month;
+                }));
+    
+        vis.svg.selectAll(".x-axis").transition().duration(0)
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(x));
+    
+        const rects = vis.svg.selectAll("rect")
+            .data(vis.data)
 
-        // DATA JOIN
-        const rects = vis.svg.selectAll('rect')
-        .data(vis.data)
+        rects.exit().remove();
 
-        // EXIT
-        rects.exit()
-            .transition().duration(500)
-            .attr('height', 0)
-            .attr('y', height)
-            .remove()
+        function handleMouseOver(d) {
+            d3.select(this).style("fill", "#CC0606");
+                tooltip
+                  .transition()
+                  .duration(200)
+                  .style('opacity', 1);
+                tooltip
+                  .html((`<strong style="color:red">Low:</strong> <strong>${d.sales[0]}</strong> <br /> <strong style="color:green">High:</strong> <strong>${d.sales[1]}</strong>`))
+                  .style('left', d3.event.pageX + 'px')
+                  .style('top', d3.event.pageY - 28 + 'px')
+        }
 
-        // UPDATE
-        rects.transition().duration(500)
-            .attr('x', d => x(d.month))
-            .attr('y', d => y(d.sales[0]))
-            .attr('width', x.bandwidth)
-            .attr("height", d => height - y(d.sales[0]))
+        function handleMouseOut() {
+            d3.select(this).style("fill", "#259CD0");
+            tooltip
+                .transition()
+                .duration(200)
+                .style('opacity', 0);
+        }
 
-        // ENTER
-		rects.enter().append('rect')
-			// .attr('x', d => x(d.month))
-			// .attr('width', x.bandwidth)
-			// .attr("fill", "#259CD0")
-			// .attr("y", height)
-			// .transition().duration(500)
-			// 	.attr('height', d => height - y(d.sales[0] - d.sales[1]) - y(0))
-			// 	.attr('y', d => y(d.sales))
-
-			// // .attr("fill", "#259CD0")
-			// // .attr('x', d => x(d.month))
-			// // .attr('width', x.bandwidth)
-			// // .attr('y', height)
-			// // .transition().duration(500)
-			// // 	.attr("height", d => y(d.sales[1] - d.sales[0]) - y(0))
-			// // 	.attr('y', d => y(d.sales))
-			
-			.attr('x', d => x(d.month))
-            .attr('width', x.bandwidth)
-            .attr('fill', '#259CD0')
-            .attr('y', height)
-            .transition().duration(500)
-				.attr("height", d => y(d.sales[1] - d.sales[0]) - y(0))
-                .attr('y', d => y(d.sales))
-
-            console.log('Rects', rects);
-	
+        rects.enter().append("rect")
+            .attr("class", "rects")
+            .style("fill", "#259CD0")
+            .on("mouseover", handleMouseOver)
+            .on("mouseout", handleMouseOut)
+            .merge(rects)
+        .transition().duration(500)
+            .attr("width", function(d) {
+                return x(d.sales[1] - d.sales[0]) - x(0);
+            })
+            .attr("height", y.bandwidth)
+            .attr("y", d => y(d.month))
+            .attr("x", function(d) {
+                return x(d.sales[0]);
+            });            
 	}
 }
