@@ -58,7 +58,7 @@ export default class D3Chart {
         const y = d3.scaleBand()
             .domain(vis.data.map(d => d.month))
             .range([height, 0])
-            .padding(0.5)
+            .padding(0.4)
 
         const xAxisCall = d3.axisBottom(x)
         vis.xAxisGroup
@@ -69,8 +69,6 @@ export default class D3Chart {
         vis.yAxisGroup
             .transition().duration(500)
             .call(yAxisCall)
-
-        y.range([margin.top, height - margin.bottom])
     
         vis.svg.selectAll(".y-axis")
             .attr("transform", `translate(${margin.left},0)`)
@@ -80,8 +78,6 @@ export default class D3Chart {
                     return vis.data[i].month;
                 }));
     
-        x.range([margin.left, width - margin.right]);
-
         vis.svg.selectAll(".x-axis").transition().duration(0)
             .attr("transform", `translate(0,${height})`)
             .call(d3.axisBottom(x));
