@@ -45,7 +45,7 @@ export default class D3Chart {
 
 	update(year) {
 		const vis = this;
-		vis.data = (year === 'first') ? vis.firstYearData : ('second' ? vis.secondYearData : vis.thirdYearData);
+		vis.data = (year === 'first') ? vis.firstYearData : (year === 'second' ? vis.secondYearData : (year === 'third'? vis.thirdYearData : null));
         vis.xLabel.text(`The ${year} year of business`)
         const y = d3.scaleLinear()
             .domain([
@@ -111,7 +111,7 @@ export default class D3Chart {
             .attr('fill', '#259CD0')
             .attr('y', height)
             .transition().duration(500)
-				.attr("height", d => y(d.sales[0] - d.sales[1]) - y(0))
+				.attr("height", d => y(d.sales[1] - d.sales[0]) - y(0))
                 .attr('y', d => y(d.sales))
 
             console.log('Rects', rects);
