@@ -1,4 +1,4 @@
-div.tooltip {
+.tooltip {
     color: #000;
     position: absolute;
     text-align: center;
@@ -11,3 +11,7 @@ div.tooltip {
     pointer-events: none;
     border-radius: 5px;
   }
+
+.rects {
+    cursor: pointer;
+}

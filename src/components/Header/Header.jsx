@@ -76,6 +76,13 @@ export default function Header() {
             >
                 Column Range Chart Wrapper
             </Link>
+            <Link 
+                to={"/file-input"}
+                style={{ textDecoration: 'none' }}
+                onClick={toggleNav}
+            >
+                File Input Example
+            </Link>
         </nav>
       </CSSTransition>
       <button onClick={toggleNav} className="header-button">
