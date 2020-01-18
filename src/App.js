@@ -3,22 +3,23 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
 import './App.scss';
 
-import WrapperPage from './pages/WrapperPage';
-import StaticBarChartPage from './pages/StaticBarChartPage';
-import ScatterGraphPage from './pages/ScatterGraphPage';
-import ColumnRangePage from './pages/ColumnRangePage';
-import FileInputPage from './pages/FileInputPage';
+import LazyLoader from './components/LazyLoader';
+const WrapperPage = React.lazy(() => import('./pages/WrapperPage'));
+const StaticBarChartPage = React.lazy(() => import('./pages/StaticBarChartPage'));
+const ScatterGraphPage = React.lazy(() => import('./pages/ScatterGraphPage'));
+const ColumnRangePage = React.lazy(() => import('./pages/ColumnRangePage'));
+const FileInputPage = React.lazy(() => import('./pages/FileInputPage'));
 
 function App() {
   return (
     <Router>
       <Header />
         <Switch>
-          <Route exact path="/" component={WrapperPage} />
-          <Route exact path="/updating-bar" component={StaticBarChartPage} />
-          <Route exact path="/scatter-graph" component={ScatterGraphPage} />
-          <Route exact path="/column-range" component={ColumnRangePage} />
-          <Route exact path="/file-input" component={FileInputPage} />
+          <Route exact path="/" component={LazyLoader(WrapperPage)} />
+          <Route exact path="/updating-bar" component={LazyLoader(StaticBarChartPage)} />
+          <Route exact path="/scatter-graph" component={LazyLoader(ScatterGraphPage)} />
+          <Route exact path="/column-range" component={LazyLoader(ColumnRangePage)} />
+          <Route exact path="/file-input" component={LazyLoader(FileInputPage)} />
         </Switch>
     </Router>
   );
