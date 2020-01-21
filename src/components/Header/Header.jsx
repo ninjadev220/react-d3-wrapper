@@ -77,11 +77,11 @@ export default function Header() {
                 Column Range Chart Wrapper
             </Link>
             <Link 
-                to={"/file-input"}
+                to={"/donut-chart"}
                 style={{ textDecoration: 'none' }}
                 onClick={toggleNav}
             >
-                File Input Example
+                Donut Chart Wrapper
             </Link>
         </nav>
       </CSSTransition>

@@ -8,7 +8,8 @@ const WrapperPage = React.lazy(() => import('./pages/WrapperPage'));
 const StaticBarChartPage = React.lazy(() => import('./pages/StaticBarChartPage'));
 const ScatterGraphPage = React.lazy(() => import('./pages/ScatterGraphPage'));
 const ColumnRangePage = React.lazy(() => import('./pages/ColumnRangePage'));
-const FileInputPage = React.lazy(() => import('./pages/FileInputPage'));
+// const FileInputPage = React.lazy(() => import('./pages/FileInputPage'));
+const DonutChartPage = React.lazy(() => import('./pages/DonutChartPage'));
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route exact path="/updating-bar" component={LazyLoader(StaticBarChartPage)} />
           <Route exact path="/scatter-graph" component={LazyLoader(ScatterGraphPage)} />
           <Route exact path="/column-range" component={LazyLoader(ColumnRangePage)} />
-          <Route exact path="/file-input" component={LazyLoader(FileInputPage)} />
+          <Route exact path="/donut-chart" component={LazyLoader(DonutChartPage)} />
         </Switch>
     </Router>
   );
