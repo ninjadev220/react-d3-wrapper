@@ -40,6 +40,7 @@
 .pie text {
   font-family: "Verdana";
   fill: #888;
+  background-color: red;
 }
 
 .pie .name-text{
@@ -48,6 +49,16 @@
 
 .pie .value-text{
   font-size: 3em;
+}
+
+.pie-arc {
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+    margin: 10px;
+    transform: scale(1.2)
+  }
 }
   
   

@@ -22,7 +22,8 @@ class D3Chart {
 
         const arc = d3.arc()
             .innerRadius(radius - 40)
-            .outerRadius(radius);
+            .outerRadius(radius)
+            .padAngle(.02);
 
 		vis.g = d3.select(element)
             .append("svg")
@@ -35,7 +36,7 @@ class D3Chart {
             d3.json(url).then(donutData => {
                 console.log(donutData);
 
-            const path = vis.g.selectAll('path')
+                const path = vis.g.selectAll('path')
                     .data(pie(donutData))
                     .enter()
                     .append("g")
@@ -66,24 +67,29 @@ class D3Chart {
                         })
                     .append('path')
                     .attr('d', arc)
+                    .attr('class', 'pie-arc')
                     .attr('fill', (d,i) => color(i))
-                    .on("mouseover", function(d) {
+                    .each(function(d) { d.outerRadius = radius - 20; })
+                    .on("mouseover", handleMouseOver)
+                    .on("mouseout", handleMouseOut)
+                    .each(function(d, i) { this._current = i; })
+
+                    function handleMouseOver(d) {
                         d3.select(this)     
                             .style("cursor", "pointer")
-                            .style("fill", "black");
-                        })
-                    .on("mouseout", function(d) {
+                    }
+                
+                    function handleMouseOut() {
                         d3.select(this)
                             .style("cursor", "none")  
                             .style("fill", color(this._current));
-                        })
-                    .each(function(d, i) { this._current = i; });
-
+                    }
 
                     vis.g.append('text')
-                    .attr('text-anchor', 'middle')
-                    .attr('dy', '.35em')
-                    .text(text);
+                        .attr('text-anchor', 'middle')
+                        .attr('dy', '.35em')
+                        .text(text);
+                    
             })        
 		// vis.update()		
 	}
