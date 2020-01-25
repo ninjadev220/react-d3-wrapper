@@ -83,6 +83,13 @@ export default function Header() {
             >
                 Donut Chart Wrapper
             </Link>
+            <Link 
+                to={"/world-map"}
+                style={{ textDecoration: 'none' }}
+                onClick={toggleNav}
+            >
+                GeoJSON Wrapper Example
+            </Link>
         </nav>
       </CSSTransition>
       <button onClick={toggleNav} className="header-button">

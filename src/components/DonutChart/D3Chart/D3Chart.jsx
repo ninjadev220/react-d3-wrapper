@@ -40,7 +40,7 @@ class D3Chart {
 
         console.log('UPDATED DATA', vis.data)
 
-        const path = vis.g.selectAll('path')
+        let path = vis.g.selectAll('path')
             .data(vis.pie(vis.data))
             .enter()
             .append("g")
@@ -71,11 +71,11 @@ class D3Chart {
                     .attr('fill', vis.color)
                     .append("g")
                 })
-
+            
             .on("mouseout", function(d) {
                 d3.select(this)
                     .style("cursor", "none")  
-                    .select(".text-group").remove();
+                    .select(".text-group").remove()
             })
 
             .append('path')
@@ -84,6 +84,22 @@ class D3Chart {
                 .attr('fill', (d,i) => vis.color(i))
                 .each(function(d) { d.outerRadius = vis.radius - 20; })
                 .each(function(d, i) { this._current = i; })
+                .on('change', change)
+
+            function change() {
+                var value = this.value;
+                vis.pie.value(function(d) { return d[value]; }); // change the value function
+                path = path.data(vis.pie); // compute the new angles
+                path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+                }
+
+            function arcTween(a) {
+                var i = d3.interpolate(this._current, a);
+                this._current = i(0);
+                return function(t) {
+                    return vis.arc(i(t));
+                };
+            }
 
     }
 }

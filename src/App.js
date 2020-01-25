@@ -10,6 +10,7 @@ const ScatterGraphPage = React.lazy(() => import('./pages/ScatterGraphPage'));
 const ColumnRangePage = React.lazy(() => import('./pages/ColumnRangePage'));
 // const FileInputPage = React.lazy(() => import('./pages/FileInputPage'));
 const DonutChartPage = React.lazy(() => import('./pages/DonutChartPage'));
+const WorldMapPage = React.lazy(() => import('./pages/WorldMapPage'));
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/scatter-graph" component={LazyLoader(ScatterGraphPage)} />
           <Route exact path="/column-range" component={LazyLoader(ColumnRangePage)} />
           <Route exact path="/donut-chart" component={LazyLoader(DonutChartPage)} />
+          <Route exact path="/world-map" component={LazyLoader(WorldMapPage)} />
         </Switch>
     </Router>
   );
