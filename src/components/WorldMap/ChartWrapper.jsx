@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import D3Chart from './D3Chart/D3Chart';
+import './ChartWrapper.scss';
 
 class ChartWrapper extends Component {
     componentDidMount(){

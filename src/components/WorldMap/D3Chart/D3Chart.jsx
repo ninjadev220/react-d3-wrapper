@@ -36,7 +36,13 @@ class D3Chart {
 					.style("stroke", "black")
 					.style("stroke-width", 0.5);
 
-				console.log('GEODATA', dataSets[0])
+				console.log('GEODATA', dataSets[1])
+
+				const tooltip = d3
+					.select('body')
+					.append('div')
+					.attr('class', 'tooltip')
+					.style('opacity', 0);
 
 				vis.nested = d3
 					.nest()
@@ -46,8 +52,12 @@ class D3Chart {
 						vis.coords = leaves.map(d => vis.projection([+d.long, +d.lat]));
 						vis.center_x = d3.mean(vis.coords, d => d[0]);
 						vis.center_y = d3.mean(vis.coords, d => d[1]);
+						vis.year = leaves.map(d => d.year);
+						vis.home = leaves.map(d => d.home);
 						return {
 							attendance: vis.total,
+							home: vis.home[0],
+							year: vis.year[0],
 							x: vis.center_x,
 							y: vis.center_y
 						};
@@ -55,6 +65,30 @@ class D3Chart {
 					.entries(dataSets[1]);
 				vis.attendance_extent = d3.extent(vis.nested, d => d.value["attendance"]);
 				
+				function handleMouseOver(d) {
+					tooltip
+						.transition()
+						.duration(200)
+						.style('opacity', 1);
+					tooltip
+						.html((`
+							<h3 style="text-align:center">${d.value["home"]}</h3>	
+							<br />
+							<strong>First Hosting Year:</strong> ${d.value["year"]}
+							<br />
+							<strong>Total Attendance:</strong> ${d.value["attendance"]}
+						`))
+						.style('left', d3.event.pageX + 'px')
+						.style('top', d3.event.pageY - 28 + 'px')
+				}
+		
+				function handleMouseOut() {
+					tooltip
+						.transition()
+						.duration(200)
+						.style('opacity', 0);
+				}
+
 				vis.rScale = d3
 					.scaleSqrt()
 					.domain(vis.attendance_extent)
@@ -75,7 +109,9 @@ class D3Chart {
 					.attr("r", d => vis.rScale(d.value["attendance"]))
 					.attr("stroke", "black")
 					.attr("stroke-width", 0.7)
-					.attr("opacity", 0.7);	
+					.attr("opacity", 0.7)
+					.on("mouseover", handleMouseOver)
+					.on("mouseout", handleMouseOut);	
 			})
 	}
 }
