@@ -4,9 +4,14 @@ const margin = { top: 10, bottom: 90, left: 90, right: 90 }
 const width = 950 - margin.left - margin.right;
 const height = 750 - margin.top - margin.bottom;
 
-class D3Chart {
-	constructor(element) {
-		let vis = this
+const map = 'https://raw.githubusercontent.com/ahebwa49/geo_mapping/master/src/world_countries.json';
+
+export default class D3Chart {
+	constructor(element, cupData) {
+		const vis = this;
+		vis.cupData = cupData;
+
+		console.log(vis.cupData);
 
 		vis.g = d3.select(element)
 			.append("svg")
@@ -15,11 +20,7 @@ class D3Chart {
 			.append("g")
 				.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
-			Promise.all([
-				d3.json("https://raw.githubusercontent.com/ahebwa49/geo_mapping/master/src/world_countries.json"),
-				d3.json("https://raw.githubusercontent.com/ahebwa49/geo_mapping/master/src/world_cup_geo.json")
-			])
-			.then(dataSets => {
+			d3.json(map).then(dataSets => {
 				vis.projection = d3.geoMercator()
 					.scale(130)
 					.translate([width / 2, height / 1.4]);
@@ -27,7 +28,7 @@ class D3Chart {
 				const path = d3.geoPath().projection(vis.projection);
 
 				const map = vis.g.selectAll("path")
-					.data(dataSets[0].features)
+					.data(dataSets.features)
 
 				map.enter()
 					.append("path")
@@ -36,7 +37,7 @@ class D3Chart {
 					.style("stroke", "black")
 					.style("stroke-width", 0.5);
 
-				console.log('GEODATA', dataSets[1])
+				console.log('GEODATA', vis.cupData)
 
 				const tooltip = d3
 					.select('body')
@@ -62,7 +63,7 @@ class D3Chart {
 							y: vis.center_y
 						};
 					})
-					.entries(dataSets[1]);
+					.entries(vis.cupData);
 				vis.attendance_extent = d3.extent(vis.nested, d => d.value["attendance"]);
 				
 				function handleMouseOver(d) {
@@ -115,5 +116,3 @@ class D3Chart {
 			})
 	}
 }
-
-export default D3Chart;

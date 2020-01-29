@@ -4,13 +4,19 @@ import './ChartWrapper.scss';
 
 class ChartWrapper extends Component {
     componentDidMount(){
-        new D3Chart(this.refs.chart)
+        this.setState({
+            chart: new D3Chart(this.refs.chart, this.props.data)
+        })
+        console.log('PROPS', this.props.data);
     }
+
+    shouldComponentUpdate() {
+		return false
+	}
 
     render() {
         return (
-            <div ref="chart">
-            </div>
+            <div className="chart-area" ref="chart"></div>
         )
     }
 }
