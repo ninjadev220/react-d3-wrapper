@@ -8,16 +8,18 @@
     margin-top: 8rem;
   }
   
-  .select-wrapper {
-    width: 400px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-  }
-  
-  .select-container {
-    width: 250px;
+  .select {
+    &-container {
+      width: 250px;
+    }
+
+    &-wrapper {
+      width: 400px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+    }
   }
   
   .graph-container {
@@ -36,47 +38,4 @@
 svg {
   filter: drop-shadow( 0px 3px 3px rgba(0,0,0,.25) );
 }
-
-.pie {
-  margin: 20px;
-}
-
-.pie text {
-  font-family: "Verdana";
-  fill: #888;
-}
-
-.arc {
-  transition: all .2s ease-in-out;
-
-  &:hover {
-    opacity: 0.8;
-    margin: 10px;
-    transform: scale(1.1);
-  }
-}
-
-.name-text{
-  font-size: 2em;
-  transition: all .2s ease-in-out;
-}
-
-.value-text{
-  font-size: 2em;
-}
-
-.pie-centre {
-  opacity: 0.2;
-}
-
-// .pie-arc {
-//   transition: all .2s ease-in-out;
-
-//   &:hover {
-//     opacity: 0.8;
-//     margin: 10px;
-//     transform: scale(1.1);
-//   }
-// }
-  
   

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import ChartWrapper from '../components/DonutChart/ChartWrapper';
 import CircleOutDemo from '../components/DonutChart/CircleOutDemo';
 import Table from '../components/DonutChart/Table';
 import { json } from 'd3';
+import '../components/DonutChart/CircleOutDemo.scss';
 
 function DonutChartPage() {
 
@@ -31,7 +31,6 @@ function DonutChartPage() {
                     innerRadius={140}
                     outerRadius={200}
                 />
-                {/* <ChartWrapper data={donutData.data} /> */}
                 <Table data={donutData.data} updateData={updateData} />
             </div>
         )
