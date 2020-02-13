@@ -32,7 +32,7 @@ class Table extends Component {
                 return (
                     <tr key={entry.company} className={`table-form__row__white`}>
                         <td className='table-form__table-data'>{entry.company}</td>
-                        <td className='table-form__table-data'>{entry.price}</td>
+                        <td className='table-form__table-data'>{`$${entry.price}`}</td>
                         <td>
                             <button 
                                 className='table-form__table-data__button'

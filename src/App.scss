@@ -44,15 +44,24 @@ svg {
 .pie text {
   font-family: "Verdana";
   fill: #888;
-  background-color: red;
 }
 
-.pie .name-text{
-  font-size: 1em;
+.arc {
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+    margin: 10px;
+    transform: scale(1.1);
+  }
+}
+
+.name-text{
+  font-size: 2em;
   transition: all .2s ease-in-out;
 }
 
-.pie .value-text{
+.value-text{
   font-size: 2em;
 }
 
@@ -60,14 +69,14 @@ svg {
   opacity: 0.2;
 }
 
-.pie-arc {
-  transition: all .2s ease-in-out;
+// .pie-arc {
+//   transition: all .2s ease-in-out;
 
-  &:hover {
-    opacity: 0.8;
-    margin: 10px;
-    transform: scale(1.2)
-  }
-}
+//   &:hover {
+//     opacity: 0.8;
+//     margin: 10px;
+//     transform: scale(1.1);
+//   }
+// }
   
   

@@ -31,6 +31,7 @@ function DonutChartPage() {
                     innerRadius={140}
                     outerRadius={200}
                 />
+                {/* <ChartWrapper data={donutData.data} /> */}
                 <Table data={donutData.data} updateData={updateData} />
             </div>
         )
