@@ -5,14 +5,14 @@ import './ChartWrapper.scss';
 class ChartWrapper extends Component {
     componentDidMount(){
         this.setState({
-            chart: new D3Chart(this.refs.chart, this.props.data)
+            chart: new D3Chart(this.refs.chart, this.props.cupData)
         })
-        console.log('PROPS', this.props.data);
+        console.log('PROPS', this.props.cupData);
     }
 
     shouldComponentUpdate() {
 		return false
-	}
+    }
 
     render() {
         return (

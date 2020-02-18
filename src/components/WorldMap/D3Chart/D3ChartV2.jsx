@@ -4,9 +4,14 @@ const margin = { top: 10, bottom: 90, left: 90, right: 90 }
 const width = 950 - margin.left - margin.right;
 const height = 750 - margin.top - margin.bottom;
 
-class D3Chart {
-	constructor(element) {
-		let vis = this
+const map = 'https://raw.githubusercontent.com/ahebwa49/geo_mapping/master/src/world_countries.json';
+
+export default class D3Chart {
+	constructor(element, cupData) {
+		const vis = this;
+		// data = data;
+
+		console.log('data', cupData);
 
 		vis.g = d3.select(element)
 			.append("svg")
@@ -15,19 +20,15 @@ class D3Chart {
 			.append("g")
 				.attr("transform", `translate(${margin.left}, ${margin.top})`)
 
-			Promise.all([
-				d3.json("https://raw.githubusercontent.com/ahebwa49/geo_mapping/master/src/world_countries.json"),
-				d3.json("https://raw.githubusercontent.com/ahebwa49/geo_mapping/master/src/world_cup_geo.json")
-			])
-			.then(dataSets => {
+			d3.json(map, cupData).then(dataSets => {
 				vis.projection = d3.geoMercator()
 					.scale(130)
 					.translate([width / 2, height / 1.4]);
-
+					
 				const path = d3.geoPath().projection(vis.projection);
 
 				const map = vis.g.selectAll("path")
-					.data(dataSets[0].features)
+					.data(dataSets.features)
 
 				map.enter()
 					.append("path")
@@ -36,7 +37,13 @@ class D3Chart {
 					.style("stroke", "black")
 					.style("stroke-width", 0.5);
 
-				console.log('GEODATA', dataSets[0])
+				console.log('GEODATA', cupData)
+
+				const tooltip = d3
+					.select('body')
+					.append('div')
+					.attr('class', 'tooltip')
+					.style('opacity', 0);
 
 				vis.nested = d3
 					.nest()
@@ -46,14 +53,42 @@ class D3Chart {
 						vis.coords = leaves.map(d => vis.projection([+d.long, +d.lat]));
 						vis.center_x = d3.mean(vis.coords, d => d[0]);
 						vis.center_y = d3.mean(vis.coords, d => d[1]);
+						vis.year = leaves.map(d => d.year);
+						vis.home = leaves.map(d => d.home);
 						return {
 							attendance: vis.total,
+							home: vis.home[0],
+							year: vis.year[0],
 							x: vis.center_x,
 							y: vis.center_y
 						};
 					})
-					.entries(dataSets[1]);
+					.entries(cupData);
 				vis.attendance_extent = d3.extent(vis.nested, d => d.value["attendance"]);
+				
+				function handleMouseOver(d) {
+					tooltip
+						.transition()
+						.duration(200)
+						.style('opacity', 1);
+					tooltip
+						.html((`
+							<h3 style="text-align:center">${d.value["home"]}</h3>	
+							<br />
+							<strong>First Hosting Year:</strong> ${d.value["year"]}
+							<br />
+							<strong>Total Attendance:</strong> ${d.value["attendance"]}
+						`))
+						.style('left', d3.event.pageX + 'px')
+						.style('top', d3.event.pageY - 28 + 'px')
+				}
+		
+				function handleMouseOut() {
+					tooltip
+						.transition()
+						.duration(200)
+						.style('opacity', 0);
+				}
 
 				vis.rScale = d3
 					.scaleSqrt()
@@ -75,9 +110,9 @@ class D3Chart {
 					.attr("r", d => vis.rScale(d.value["attendance"]))
 					.attr("stroke", "black")
 					.attr("stroke-width", 0.7)
-					.attr("opacity", 0.7);	
+					.attr("opacity", 0.7)
+					.on("mouseover", handleMouseOver)
+					.on("mouseout", handleMouseOut);	
 			})
 	}
 }
-
-export default D3Chart;

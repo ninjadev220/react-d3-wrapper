@@ -11,12 +11,14 @@ function WorldMapPage() {
             .catch(error => console.log(error))
     }, []);
 
+    console.log('CUPDATA', cupData);
+
     return (    
         <div className="App">
             <h2>GeoJSON Wrapper Example</h2>
             <p>Historical FIFA World Cup Hosting Locations</p>
             <div className='graph-container'>
-                <ChartWrapper data={cupData.data}/>
+                <ChartWrapper cupData={cupData}/>
             </div>
         </div>
     );
